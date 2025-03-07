@@ -10,10 +10,10 @@ Ce projet est la partie backend d'une application full-stack qui permet de gére
 - Filtrage des tâches par statut et titre
 
 ## Structure du Projet
-- **backend** : Contient le code Spring Boot (entités, repositories, services, controllers, map)
+- **backend** : Contient le code Spring Boot (entités, dto, dao, services, controllers, map)
 
 ## Technologies Utilisées
-- **Backend** : Java Spring Boot, Spring Data JPA, H2 Database (ou MySQL)
+- **Backend** : Java Spring Boot, Spring Data JPA, MySQL
 - **Base de données** : MySQL
 - **Outils** : Lombok, Spring Initializr
 
@@ -30,3 +30,15 @@ Ce projet est la partie backend d'une application full-stack qui permet de gére
 2. Accéder au dossier backend : `cd seomaniakTest`
 3. Configurer la base de données dans `application.properties` pour MySQL
 4. Lancer l'application : `mvn spring-boot:run`
+
+## application.properties pour MySQL
+### Database Configuration
+spring.datasource.url=jdbc:mysql://localhost:3306/seomaniakTest?createDatabaseIfNotExist=true
+spring.datasource.username="your username"
+spring.datasource.password="your password"
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+### JPA Configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
