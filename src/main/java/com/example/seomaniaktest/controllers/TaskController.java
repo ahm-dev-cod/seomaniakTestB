@@ -5,15 +5,13 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/tasks")
+@CrossOrigin(origins = "http://localhost:4200") // Autorise Angular
 @AllArgsConstructor
 public class TaskController {
     @Autowired
@@ -25,10 +23,30 @@ public class TaskController {
         return new ResponseEntity<>(taskDTOS, HttpStatus.OK);
     }
     // ###################################################################################
+    @PostMapping
+    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO) {
+        TaskDTO taskDTO1 = taskService.addTask(taskDTO);
+        return new ResponseEntity<>(taskDTO1, HttpStatus.CREATED);
+    }
+    // ###################################################################################
+
     @GetMapping("/search")
     public List<TaskDTO> searchTasks(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String status) {
         return taskService.searchTasks(title, status);
+    }
+    // ###################################################################################
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteTask(@PathVariable Long id) {
+        taskService.deleteTask(id);
+        return new ResponseEntity<>("Task deleted", HttpStatus.OK);
+    }
+
+    @PatchMapping("{id}")
+    public ResponseEntity<TaskDTO> updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO) {
+        taskDTO.setId(id);
+        TaskDTO taskDTO1 = taskService.updateTask(taskDTO);
+        return new ResponseEntity<>(taskDTO1, HttpStatus.OK);
     }
 }

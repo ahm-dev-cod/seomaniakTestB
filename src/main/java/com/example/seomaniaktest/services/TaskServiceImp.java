@@ -6,10 +6,16 @@ import com.example.seomaniaktest.entities.Task;
 import com.example.seomaniaktest.map.TaskMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,4 +49,35 @@ public class TaskServiceImp implements TaskService {
     }
     // ###################################################################################
 
+    @Override
+    public TaskDTO addTask(TaskDTO taskDTO) {
+        Task task = TaskMapper.mapToTask(taskDTO);
+        task = taskRepository.save(task);
+        return TaskMapper.mapToTaskDTO(task);
+    }
+    // ###################################################################################
+    @Override
+    public void deleteTask(Long taskId) {
+        if(taskRepository.findById(taskId).isPresent()) {
+            taskRepository.deleteById(taskId);
+        }
+    }
+    static DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+    @Override
+    public TaskDTO updateTask(TaskDTO taskDTO) {
+        Optional<Task> taskOptional = taskRepository.findById(taskDTO.getId());
+        if(taskOptional.isPresent()) {
+            Task taskToUpdate = taskOptional.get();
+            taskToUpdate.setTitle(taskDTO.getTitle());
+            taskToUpdate.setStatus(taskDTO.getStatus());
+            taskToUpdate.setDescription(taskDTO.getDescription());
+            taskToUpdate.setDueDate(LocalDate.parse(taskDTO.getDueDate(), formatter));
+            taskRepository.save(taskToUpdate);
+            return TaskMapper.mapToTaskDTO(taskToUpdate);
+        }
+        return null;
+    }
+    // ###################################################################################
+
 }
+// ###################################################################################

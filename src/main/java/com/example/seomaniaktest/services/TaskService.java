@@ -9,4 +9,7 @@ public interface TaskService {
     List<TaskDTO> getTasks();
     List<Task> getTasksByProjectId(Long projectId);
     List<TaskDTO> searchTasks(String title, String status);
+    TaskDTO addTask(TaskDTO taskDTO);
+    void deleteTask(Long taskId);
+    TaskDTO updateTask(TaskDTO taskDTO);
 }
