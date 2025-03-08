@@ -11,5 +11,5 @@ public interface TaskService {
     List<TaskDTO> searchTasks(String title, String status);
     TaskDTO addTask(TaskDTO taskDTO);
     void deleteTask(Long taskId);
-    TaskDTO updateTask(TaskDTO taskDTO);
+   // TaskDTO updateTask(TaskDTO taskDTO);
 }
