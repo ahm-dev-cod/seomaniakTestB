@@ -62,21 +62,21 @@ public class TaskServiceImp implements TaskService {
             taskRepository.deleteById(taskId);
         }
     }
-    static DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+   // static DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
     @Override
-    public TaskDTO updateTask(TaskDTO taskDTO) {
-        Optional<Task> taskOptional = taskRepository.findById(taskDTO.getId());
-        if(taskOptional.isPresent()) {
-            Task taskToUpdate = taskOptional.get();
-            taskToUpdate.setTitle(taskDTO.getTitle());
-            taskToUpdate.setStatus(taskDTO.getStatus());
-            taskToUpdate.setDescription(taskDTO.getDescription());
-            taskToUpdate.setDueDate(LocalDate.parse(taskDTO.getDueDate(), formatter));
-            taskRepository.save(taskToUpdate);
-            return TaskMapper.mapToTaskDTO(taskToUpdate);
-        }
-        return null;
-    }
+ //   public TaskDTO updateTask(TaskDTO taskDTO) {
+   //     Optional<Task> taskOptional = taskRepository.findById(taskDTO.getId());
+     //   if(taskOptional.isPresent()) {
+       //     Task taskToUpdate = taskOptional.get();
+         //   taskToUpdate.setTitle(taskDTO.getTitle());
+           // taskToUpdate.setStatus(taskDTO.getStatus());
+            //taskToUpdate.setDescription(taskDTO.getDescription());
+           // taskToUpdate.setDueDate(LocalDate.parse(taskDTO.getDueDate(), formatter));
+           // taskRepository.save(taskToUpdate);
+           // return TaskMapper.mapToTaskDTO(taskToUpdate);
+       // }
+       // return null;
+   // }
     // ###################################################################################
 
 }
